@@ -1,6 +1,6 @@
 require('babel-core/register');
 var gitCommitSummary = require('./git-commit-summary').GitCommitSummary;
-// GitCommitSummary.generate();
-gitCommitSummary = new gitCommitSummary();
 
-gitCommitSummary.generate();
+gitCommitSummary = new gitCommitSummary({repoCommitLink: 'https://github.com/maxime1992/git-commit-summary/commit/'});
+
+gitCommitSummary._generate();

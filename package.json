@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "git --no-pager log --pretty=oneline > ./git-log.txt && node ./index.js > ./release-notes.txt && rm -f ./git-log.txt"
+    "start": "node ./index.js",
+    "release-notes": "node ./index.js > ./release-notes.txt"
   },
   "repository": {
     "type": "git",

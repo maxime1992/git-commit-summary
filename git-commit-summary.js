@@ -39,8 +39,13 @@ class GitCommit {
 }
 
 export class GitCommitSummary {
-	constructor({repoCommitLink}) {
+	// repoCommitLink : string        - https://github.com/maxime1992/git-commit-summary/commit/ for example
+	// headerLines    : Array<string> - You can define multiple lines to add before the commit summary
+	// footerLines    : Array<string> - You can define multiple lines to add after the commit summary
+	constructor({repoCommitLink = '', headerLines = [], footerLines = []}) {
 		this._repoCommitLink = repoCommitLink;
+		this._headerLines = headerLines;
+		this._footerLines = footerLines;
 
 		this._commits = [];
 		
@@ -76,8 +81,10 @@ export class GitCommitSummary {
 			// split data by line
 			let lines = data.toString().match(/[^\r\n]+/g);
 
-			console.log('| Commit | Type | Description |');
-			console.log('| ------ | ---- | ----------- |');
+			// display header's lines
+			for (let headerLine of this._headerLines) {
+				console.log(headerLine);
+			}
 
 			for (let line of lines) {
 				for (let type of this.types) {
@@ -99,6 +106,11 @@ export class GitCommitSummary {
 			}
 
 			this._commitsToString();
+
+			// display footer's lines
+			for (let footerLine of this._footerLines) {
+				console.log(footerLine);
+			}
 		});
 	}
 

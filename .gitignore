@@ -1,0 +1,7 @@
+# folders
+/node_modules
+
+# files
+npm-debug.log
+git-log.txt
+release-notes.txt

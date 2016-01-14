@@ -1,6 +1,7 @@
 // "npm start" to launch the generation
 import readline from 'readline';
 import {spawn} from 'child_process';
+import jsonfile from 'jsonfile';
 
 class GitCommit {
 	constructor({repoCommitLink = '', sha = '', type = '', description = ''}) {
@@ -42,13 +43,13 @@ export class GitCommitSummary {
 	// repoCommitLink : string        - https://github.com/maxime1992/git-commit-summary/commit/ for example
 	// headerLines    : Array<string> - You can define multiple lines to add before the commit summary
 	// footerLines    : Array<string> - You can define multiple lines to add after the commit summary
-	constructor({repoCommitLink = '', headerLines = [], footerLines = []}) {
+	constructor({repoCommitLink, headerLines, footerLines} = {repoCommitLink : '', headerLines : [], footerLines : []}) {
 		this._repoCommitLink = repoCommitLink;
-		this._headerLines = headerLines;
-		this._footerLines = footerLines;
+		this._headerLines    = headerLines;
+		this._footerLines    = footerLines;
 
 		this._commits = [];
-		
+
 		// types to check
 		this.types = [
 			{name: 'chore', regex: /([a-zA-Z0-9]*) (chore|chore\([a-zA-Z]*\)): (.*)/},
@@ -60,6 +61,35 @@ export class GitCommitSummary {
 			{name: 'style', regex: /([a-zA-Z0-9]*) (style): (.*)/},
 			{name: 'test', regex: /([a-zA-Z0-9]*) (test): (.*)/}
 		];
+	}
+
+	generate() {
+		jsonfile.readFile('./.gitcommitsummary', (err, config) => {
+			if (err) {
+				console.log('Create a file called ".gitcommitsummary" at the root of your project to use git-commit-summary or pass arguments with nodejs.');
+				return;
+			}
+
+			// load configuration from json file if not already defined
+			if (this._repoCommitLink.length === 0) {
+				this._repoCommitLink = config.repoCommitLink;
+			}
+
+			if (this._headerLines.length === 0 ) {
+				this._headerLines = config.headerLines;
+			}
+
+			if (this._footerLines.length === 0) {
+				this._footerLines = config.footerLines;
+			}
+
+			if (typeof this._repoCommitLink === 'undefined' || typeof this._headerLines === 'undefined' || typeof this._footerLines === 'undefined') {
+				console.log('Please, define repoCommitLink, headerLines and footerLines.');
+				return;
+			}
+
+			this._generate();
+		});
 	}
 
 	_generate() {

@@ -1,2 +1,6 @@
 require('babel-core/register');
-require('./git-commit-summary');
+var gitCommitSummary = require('./git-commit-summary').GitCommitSummary;
+// GitCommitSummary.generate();
+gitCommitSummary = new gitCommitSummary();
+
+gitCommitSummary.generate();

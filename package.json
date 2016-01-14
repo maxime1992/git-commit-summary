@@ -4,7 +4,8 @@
   "description": "Easily generate release notes based on commit history.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "git --no-pager log --pretty=oneline > ./git-log.txt && node ./git-commit-summary.js > ./release-notes.txt && rm -f ./git-log.txt"
   },
   "repository": {
     "type": "git",

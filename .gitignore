@@ -4,3 +4,4 @@
 # files
 npm-debug.log
 release-notes.txt
+/bin/git-commit-summary.js

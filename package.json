@@ -2,16 +2,22 @@
   "name": "git-commit-summary",
   "version": "0.3.0",
   "description": "Easily generate release notes based on commit history.",
-  "main": "index.js",
+  "main": "./lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./index.js",
-    "release-notes": "node ./index.js > ./release-notes.txt"
+    "start": "node ./lib/index.js",
+    "release-notes": "node ./lib/index.js > ./release-notes.txt",
+    "compile": "babel ./lib/git-commit-summary.js -o ./bin/git-commit-summary.js",
+    "prepublish": "npm run compile"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/maxime1992/git-commit-summary.git"
   },
+  "bin": {
+    "gcs": "./bin/index.js"
+  },
+  "preferGlobal": true,
   "keywords": [
     "git",
     "commit",
